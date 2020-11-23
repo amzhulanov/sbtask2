@@ -1,12 +1,10 @@
 package jam.example.sbtask2.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-
 
 /**
  * Сущность Справочник
@@ -23,7 +21,7 @@ public class Guide {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     protected Long id;
 
-    @OneToMany(mappedBy = "guide")
+    @OneToMany(mappedBy = "guide",cascade = CascadeType.REMOVE)
     private List<Field> fieldList;
 
     @Column

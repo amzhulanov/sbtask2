@@ -6,8 +6,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Тип данных
+ *
+ */
 @Entity
-@Table(name = "type")
+@Table(name = "type",uniqueConstraints= @UniqueConstraint(columnNames={"id", "name"}))
 @Data
 @NoArgsConstructor
 public class Type {
@@ -17,7 +21,7 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type",cascade = CascadeType.REMOVE)
     private List<Field> fieldList;
 
     @Column

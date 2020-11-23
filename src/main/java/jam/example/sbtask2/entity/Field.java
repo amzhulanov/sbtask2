@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Сущность Поля справочника. Содержит код справочника, код и тип поля
+ * Сущность Поля справочника. Содержит связку справочника, имени и типа поля
  */
 @Entity
 @Table(name = "field")
@@ -21,15 +21,15 @@ public class Field {
     protected Long id;
 
     @OneToMany(mappedBy = "field",
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.REMOVE)
     private List<Vallue> vallueList;
 
-    @ManyToOne()//cascade = {CascadeType.PERSIST,CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "guide_id")
     private Guide guide;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id")
     private Type type;
 
@@ -41,4 +41,5 @@ public class Field {
         this.guide = guide;
         this.type = type;
     }
+
 }

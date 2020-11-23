@@ -1,14 +1,14 @@
 package jam.example.sbtask2.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 /**
- * Сущность для хранения данных. Содержит код поля и сами данные
+ * Сущность для хранения данных. Содержит код поля, номер записи и сами данные
+ *
+ * @author JAM
  */
 @Entity
 @Table(name="vallue")
@@ -28,8 +28,12 @@ public class Vallue {
     @JoinColumn(name="field_id")
     private Field field;
 
-    public Vallue(Field field, String vallue) {
+    @Column
+    private Long row;
+
+    public Vallue(Field field, String vallue,Long row) {
         this.field=field;
         this.vallue=vallue;
+        this.row=row;
     }
 }
