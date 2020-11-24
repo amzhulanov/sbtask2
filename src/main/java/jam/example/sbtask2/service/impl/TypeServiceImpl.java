@@ -21,13 +21,11 @@ public class TypeServiceImpl implements TypeService {
     /**
      * Метод для добавления нового типа данных
      *
-     * @param name имя типа
+     * @param type новый тип данных
      * @return возвращает добавленный Type
      */
-    public Type addType(String name) {
-        log.info("saved new Data type = " + name);
-        //if (findType(name).)
-        return typeRepository.save(new Type(name));
+    public Type addType(Type type) {
+        return typeRepository.save(type);
     }
 
     public Type findType(String name) {

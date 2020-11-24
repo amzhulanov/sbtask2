@@ -17,10 +17,10 @@ public class GuideServiceImpl implements GuideService {
         this.guideRepository = guideRepository;
     }
 
-    public Guide addGuide(String name) {
-        Guide guide = guideRepository.findGuideByName(name).orElse(null);
-        if (guide == null) {
-            return guideRepository.save(new Guide(name));
+    public Guide addGuide(Guide guide) {
+        Guide savedGuide = guideRepository.findGuideByName(guide.getName()).orElse(null);
+        if (savedGuide == null) {
+            return guideRepository.save(guide);
         }
         return guide;
     }

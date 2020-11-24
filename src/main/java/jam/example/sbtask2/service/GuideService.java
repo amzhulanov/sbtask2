@@ -9,7 +9,7 @@ import jam.example.sbtask2.entity.Guide;
  */
 public interface GuideService {
 
-    Guide addGuide(String name);
+    Guide addGuide(Guide guide);
 
     void deleteGuide(String name);
 

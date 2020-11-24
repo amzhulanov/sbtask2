@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:test.properties")
+@PropertySource("classpath:service_test.properties")
 public class ConstantSQLTest {
 
     @Value("${guide.val}")

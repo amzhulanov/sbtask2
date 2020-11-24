@@ -10,7 +10,7 @@ import jam.example.sbtask2.entity.Type;
 
 public interface TypeService {
 
-    Type addType(String name);
+    Type addType(Type type);
 
     public Type findType(String name);
 
