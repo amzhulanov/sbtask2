@@ -53,9 +53,9 @@ class LifeCycleServicesTest extends ConstantSQLTest {
         vallueList.put(nameField, val3);
         vallueList.put(nameField2, val4);
         vallueService.addVallue(nameGuide, vallueList);
-        assertThat(vallueService.findAllByVallues(nameGuide, nameField, nameField2,val,val2).size()).isSameAs(1);
-        vallueService.editVallue(nameGuide,nameField2,val3,val2);
-        vallueService.deleteVallue(nameGuide,nameField2,val3);
+        assertThat(vallueService.findAllByVallues(nameGuide, nameField, nameField2, val, val2).size()).isSameAs(1);
+        vallueService.editVallue(nameGuide, nameField2, val3, val2);
+        vallueService.deleteVallue(nameGuide, nameField2, val3);
         guideService.deleteGuide(nameGuide);
     }
 
