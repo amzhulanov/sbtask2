@@ -1,6 +1,6 @@
 package jam.example.sbtask2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +15,10 @@ import java.util.List;
 @Table(name = "guide")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+scope=Guide.class)
 public class Guide {
 
     @Id
@@ -24,6 +27,7 @@ public class Guide {
     protected Long id;
 
     @OneToMany(mappedBy = "guide",cascade = CascadeType.REMOVE)
+
     private List<Field> fieldList;
 
     @Column

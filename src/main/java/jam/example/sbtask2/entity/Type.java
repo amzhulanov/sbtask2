@@ -1,6 +1,6 @@
 package jam.example.sbtask2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +15,10 @@ import java.util.List;
 @Table(name = "type",uniqueConstraints= @UniqueConstraint(columnNames={"id", "name"}))
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope=Type.class)
 public class Type {
 
     @Id

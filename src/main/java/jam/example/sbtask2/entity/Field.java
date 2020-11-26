@@ -1,6 +1,6 @@
 package jam.example.sbtask2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,11 @@ import java.util.List;
 @Table(name = "field")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Field.class)
 public class Field {
 
     @Id
@@ -25,13 +29,14 @@ public class Field {
     @OneToMany(mappedBy = "field",
             fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE)
+
     private List<Vallue> vallueList;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "guide_id")
     private Guide guide;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id")
     private Type type;
 
@@ -42,6 +47,15 @@ public class Field {
         this.name = name;
         this.guide = guide;
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                '}';
     }
 
 }

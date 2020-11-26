@@ -3,6 +3,8 @@ package jam.example.sbtask2.service.impl;
 import jam.example.sbtask2.entity.Vallue;
 import jam.example.sbtask2.repository.FieldRepository;
 import jam.example.sbtask2.repository.VallueRepository;
+import jam.example.sbtask2.service.FieldService;
+import jam.example.sbtask2.service.GuideService;
 import jam.example.sbtask2.service.VallueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ import java.util.Map;
 public class ValueServiceImpl implements VallueService {
 
     private final VallueRepository vallueRepository;
-    private final FieldRepository fieldRepository;
+    private final GuideService guideService;
+    private final FieldService fieldService;
 
     @Autowired
-    public ValueServiceImpl(VallueRepository vallueRepository, FieldRepository fieldRepository) {
+    public ValueServiceImpl(VallueRepository vallueRepository, GuideService guideService, FieldService fieldService) {
         this.vallueRepository = vallueRepository;
-        this.fieldRepository = fieldRepository;
+        this.guideService = guideService;
+        this.fieldService = fieldService;
     }
 
     /**
@@ -36,8 +40,8 @@ public class ValueServiceImpl implements VallueService {
         Long nextRow = vallueRepository.findMaxRowByGuide(nameGuide).orElse(0L) + 1;
         List<Vallue> result = new ArrayList<>();
         vallueList.forEach((fld, val) -> {
-            fieldRepository.findFieldByName(nameGuide, fld);
-            result.add(vallueRepository.save(new Vallue(fieldRepository.findFieldByName(nameGuide, fld), val, nextRow)));
+            fieldService.findFieldByName(nameGuide, fld);
+            result.add(vallueRepository.save(new Vallue(fieldService.findFieldByName(nameGuide, fld), val, nextRow)));
         });
         return result;
     }

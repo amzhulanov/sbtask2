@@ -15,10 +15,6 @@ public interface FieldService {
 
     Field renameFieldByName(String nameGuide, String oldName, String newName);
 
-    void deleteAllFields();
-
-    void deleteFieldByName(String nameGuide, String name);
-
 }
 
 

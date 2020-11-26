@@ -3,6 +3,7 @@ package jam.example.sbtask2.service.impl;
 import jam.example.sbtask2.entity.Field;
 import jam.example.sbtask2.repository.FieldRepository;
 import jam.example.sbtask2.service.FieldService;
+import jam.example.sbtask2.service.GuideService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 public class FieldServiceImpl implements FieldService {
 
     private final FieldRepository fieldRepository;
+    private final GuideService guideService;
 
-    public FieldServiceImpl(FieldRepository fieldRepository) {
+    public FieldServiceImpl(FieldRepository fieldRepository, GuideService guideService) {
         this.fieldRepository = fieldRepository;
+        this.guideService = guideService;
     }
 
     public Field addField(Field field) {
@@ -22,21 +25,23 @@ public class FieldServiceImpl implements FieldService {
 
     public Field findFieldByName(String nameGuide, String name) {
         log.info("findFieldByName.guide= " + nameGuide);
-        return fieldRepository.findFieldByName(nameGuide, name);
+        Long guideId=guideService.findGuideByName(nameGuide).getId();
+        return fieldRepository.findFieldByName(guideId, name);
     }
 
+    //todo изменить возврат null на проброс понятного исключения
     public Field renameFieldByName(String nameGuide, String oldName, String newName) {
-        Field field = fieldRepository.findFieldByName(nameGuide, oldName);
-        field.setName(newName);
-        return fieldRepository.save(field);
-    }
-
-    public void deleteAllFields() {
-        fieldRepository.deleteAll();
-    }
-
-    public void deleteFieldByName(String nameGuide, String name) {
-        fieldRepository.deleteByName(nameGuide, name);
+        Long guideId=guideService.findGuideByName(nameGuide).getId();
+        if (guideId!=null) {
+            Field field = fieldRepository.findFieldByName(guideId, oldName);
+            if (field != null) {
+                field.setName(newName);
+                return fieldRepository.save(field);
+            }
+        }else{
+            return null;
+        }
+        return null;
     }
 
 }

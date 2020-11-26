@@ -47,10 +47,22 @@ class GuideStructureControllerTest extends ConstantJsonTest {
     @Order(3)
     void addFieldTest() throws Exception  {
         mvc.perform(MockMvcRequestBuilders
-                .put("/db/createGuide")
+                .put("/db/createField")
                 .contentType(MediaType.APPLICATION_JSON).content(put_field))
                 .andDo(print())
                 .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders
+                .put("/db/createField")
+                .contentType(MediaType.APPLICATION_JSON).content(put_field2))
+                .andDo(print())
+                .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders
+                .put("/db/createField")
+                .contentType(MediaType.APPLICATION_JSON).content(put_field3))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+
     }
 
     @Test
@@ -61,20 +73,11 @@ class GuideStructureControllerTest extends ConstantJsonTest {
                 .contentType(MediaType.APPLICATION_JSON).content(post_field))
                 .andDo(print())
                 .andExpect(status().isOk());
+
     }
 
     @Test
     @Order(5)
-    void dropFieldTest() throws Exception  {
-        mvc.perform(MockMvcRequestBuilders
-                .delete("/db/dropField")
-                .contentType(MediaType.APPLICATION_JSON).content(drop_field))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @Order(6)
     void dropGuideTest() throws Exception  {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/db/dropGuide")

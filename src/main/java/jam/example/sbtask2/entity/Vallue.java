@@ -1,5 +1,7 @@
 package jam.example.sbtask2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +16,10 @@ import javax.persistence.*;
 @Table(name="vallue")
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope=Vallue.class)
 public class Vallue {
 
     @Id
@@ -36,4 +42,5 @@ public class Vallue {
         this.vallue=vallue;
         this.row=row;
     }
+
 }

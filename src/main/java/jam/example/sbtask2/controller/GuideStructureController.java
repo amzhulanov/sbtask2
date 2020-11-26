@@ -89,21 +89,12 @@ public class GuideStructureController {
     public ResponseEntity<String> renameField( @RequestBody String json) throws JsonProcessingException {
         fieldsGuide = converter.convertJsonToMap(json);
         Field field=fieldService.renameFieldByName(fieldsGuide.get("nameGuide"),fieldsGuide.get("oldName"),fieldsGuide.get("newName"));
-        result=converter.convertEntityToJson(fieldService.addField(field));
+        if (field!=null){
+            result=converter.convertEntityToJson(fieldService.addField(field));
             return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * Метод для удаления поля из справочника
-     *
-     * @param json {"nameField":"nickname"}
-     * @return Возвращает статус удаления полей справочника
-     */
-    @DeleteMapping("/dropField")
-    public ResponseEntity<String> dropField( @RequestBody String json) {
-        fieldsGuide = converter.convertJsonToMap(json);
-        fieldService.deleteFieldByName(fieldsGuide.get("nameGuide"),fieldsGuide.get("nameField"));
-        return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Field not found", HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

@@ -20,6 +20,12 @@ public class ConstantJsonTest {
     @Value("${controllers.structure.put.field}")
     public String put_field;
 
+    @Value("${controllers.structure.put.field2}")
+    public String put_field2;
+
+    @Value("${controllers.structure.put.field3}")
+    public String put_field3;
+
     @Value("${controllers.structure.post.field}")
     public String post_field;
 
