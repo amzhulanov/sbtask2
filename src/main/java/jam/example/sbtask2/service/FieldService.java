@@ -9,7 +9,7 @@ import jam.example.sbtask2.entity.Field;
  */
 public interface FieldService {
 
-    Field addField(Field field);
+    Field saveField(Field field);
 
     Field findFieldByName(String nameGuide, String name);
 

@@ -28,7 +28,7 @@ class FieldServiceTest {
     void addColumn() {
 
 
-        field = fieldService.addField(new Field(new Guide("Guide1"), "column2", new Type("String")));
+        field = fieldService.saveField(new Field(new Guide("Guide1"), "column2", new Type("String")));
         assertThat(field.getGuide().getName()).isEqualTo("Guide1");
     }
 

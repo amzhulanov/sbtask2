@@ -7,6 +7,13 @@ import jam.example.sbtask2.service.GuideService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+/**
+ * Класс с реализацией сервиса работы со структурой справочника
+ *
+ * @author JAM
+ */
 @Service
 @Slf4j
 public class FieldServiceImpl implements FieldService {
@@ -19,12 +26,31 @@ public class FieldServiceImpl implements FieldService {
         this.guideService = guideService;
     }
 
-    public Field addField(Field field) {
+    /**
+     * Метод для добавления одного поля в справочник
+     * @param field Сущность поля
+     * @return Возвращает сохранённое значение
+     */
+    public Field saveField(Field field) {
         return fieldRepository.save(field);
     }
 
+    /**
+     * Метод для добавления списка полей в справочник
+     * @param fieldList Список сущностей типа Field
+     * @return Возвращает сохранённые значения
+     */
+    public List<Field> saveFields(List<Field> fieldList){
+        return fieldRepository.saveAll(fieldList);
+    }
+
+    /**
+     * Поиск Field по имени
+     * @param nameGuide наименование справочника
+     * @param name имя искомого поля
+     * @return найденное значение Fiild
+     */
     public Field findFieldByName(String nameGuide, String name) {
-        log.info("findFieldByName.guide= " + nameGuide);
         Long guideId=guideService.findGuideByName(nameGuide).getId();
         return fieldRepository.findFieldByName(guideId, name);
     }

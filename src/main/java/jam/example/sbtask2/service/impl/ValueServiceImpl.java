@@ -1,10 +1,8 @@
 package jam.example.sbtask2.service.impl;
 
 import jam.example.sbtask2.entity.Vallue;
-import jam.example.sbtask2.repository.FieldRepository;
 import jam.example.sbtask2.repository.VallueRepository;
 import jam.example.sbtask2.service.FieldService;
-import jam.example.sbtask2.service.GuideService;
 import jam.example.sbtask2.service.VallueService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,31 +17,29 @@ import java.util.Map;
 public class ValueServiceImpl implements VallueService {
 
     private final VallueRepository vallueRepository;
-    private final GuideService guideService;
     private final FieldService fieldService;
 
     @Autowired
-    public ValueServiceImpl(VallueRepository vallueRepository, GuideService guideService, FieldService fieldService) {
+    public ValueServiceImpl(VallueRepository vallueRepository, FieldService fieldService) {
         this.vallueRepository = vallueRepository;
-        this.guideService = guideService;
         this.fieldService = fieldService;
     }
 
     /**
      * Метод сохраняет запись в БД
      * @param nameGuide имя справочника
-     * @param vallueList Список полей и значений
+     * @param vallueMap Список полей и значений
      * @return Список добавленных Vallue
      */
-    //todo изменить на batch-операции
-    public List<Vallue> addVallue(String nameGuide, Map<String, String> vallueList) {
+    public List<Vallue> addVallue(String nameGuide, Map<String, String> vallueMap) {
         Long nextRow = vallueRepository.findMaxRowByGuide(nameGuide).orElse(0L) + 1;
-        List<Vallue> result = new ArrayList<>();
-        vallueList.forEach((fld, val) -> {
+        List<Vallue> vallueList = new ArrayList<>();
+        vallueMap.forEach((fld, val) -> {
             fieldService.findFieldByName(nameGuide, fld);
-            result.add(vallueRepository.save(new Vallue(fieldService.findFieldByName(nameGuide, fld), val, nextRow)));
+            vallueList.add(new Vallue(fieldService.findFieldByName(nameGuide, fld), val, nextRow));
+
         });
-        return result;
+        return vallueRepository.saveAll(vallueList);
     }
 
     /**
@@ -93,4 +89,5 @@ public class ValueServiceImpl implements VallueService {
     public List<Vallue> findAllByVallues(String nameGuide, String nameField, String nameField2, String val, String val2) {
         return vallueRepository.findAllByVallues(nameGuide, nameField, val, nameField2, val2);
     }
+
 }

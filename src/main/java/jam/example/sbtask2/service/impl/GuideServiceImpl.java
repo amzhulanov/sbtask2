@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+/**
+ * Класс реализаций методов сервиса по работе со справочником
+ *
+ * @author JAM
+ */
 @Service
 @Slf4j
 public class GuideServiceImpl implements GuideService {
@@ -17,6 +22,11 @@ public class GuideServiceImpl implements GuideService {
         this.guideRepository = guideRepository;
     }
 
+    /**
+     * Создание нового справочника
+     * @param guide Сущность справочника
+     * @return Возвращет созданную сущность
+     */
     public Guide addGuide(Guide guide) {
         Guide savedGuide = guideRepository.findGuideByName(guide.getName()).orElse(null);
         if (savedGuide == null) {
@@ -25,14 +35,28 @@ public class GuideServiceImpl implements GuideService {
         return guide;
     }
 
+    /**
+     * Удаляет справочник
+     * @param name имя справочника
+     */
     public void deleteGuide(String name) {
         guideRepository.findGuideByName(name).ifPresent(guideRepository::delete);
     }
 
+    /**
+     * Поиск справочника по имени
+     * @param name имя справочника
+     * @return Найденная сущность
+     */
     public Guide findGuideByName(String name) {
         return guideRepository.findGuideByName(name).orElse(null);
     }
 
+    /**
+     * Переименование справочника
+     * @param oldName старое имя
+     * @param newName новое имя
+     */
     public void renameGuide(String oldName, String newName) {
         Objects.requireNonNull(guideRepository.findGuideByName(oldName).orElse(null)).setName(newName);
     }

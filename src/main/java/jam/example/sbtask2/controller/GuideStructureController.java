@@ -75,7 +75,7 @@ public class GuideStructureController {
     //todo сделать обработку ситуации, если поле уже существует
     public ResponseEntity<String>  addField(@RequestBody String json) throws JsonProcessingException {
         Field field = converter.convertJsonToEntity(json,Field.class);
-        result=converter.convertEntityToJson(fieldService.addField(field));
+        result=converter.convertEntityToJson(fieldService.saveField(field));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -90,7 +90,7 @@ public class GuideStructureController {
         fieldsGuide = converter.convertJsonToMap(json);
         Field field=fieldService.renameFieldByName(fieldsGuide.get("nameGuide"),fieldsGuide.get("oldName"),fieldsGuide.get("newName"));
         if (field!=null){
-            result=converter.convertEntityToJson(fieldService.addField(field));
+            result=converter.convertEntityToJson(fieldService.saveField(field));
             return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Field not found", HttpStatus.BAD_REQUEST);

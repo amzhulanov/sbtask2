@@ -19,7 +19,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     /**
-     * Метод для добавления нового типа данных
+     * Добавляет новый тип данных
      *
      * @param type новый тип данных
      * @return возвращает добавленный Type

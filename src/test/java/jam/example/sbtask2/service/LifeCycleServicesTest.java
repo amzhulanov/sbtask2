@@ -43,9 +43,9 @@ class LifeCycleServicesTest extends ConstantSQLTest {
         Field field = new Field(guide, nameField, type);
         Field field2 = new Field(guide, nameField2, type);
         Field field3 = new Field(guide, nameField3, type);
-        fieldService.addField(field);
-        fieldService.addField(field2);
-        fieldService.addField(field3);
+        fieldService.saveField(field);
+        fieldService.saveField(field2);
+        fieldService.saveField(field3);
         vallueList.put(nameField, val);
         vallueList.put(nameField2, val2);
         vallueService.addVallue(nameGuide, vallueList);
