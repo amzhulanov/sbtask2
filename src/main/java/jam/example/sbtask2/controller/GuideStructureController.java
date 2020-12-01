@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jam.example.sbtask2.entity.Field;
 import jam.example.sbtask2.entity.Guide;
 import jam.example.sbtask2.entity.Type;
+import jam.example.sbtask2.exception.ServiceException;
 import jam.example.sbtask2.service.FieldService;
 import jam.example.sbtask2.service.GuideService;
 import jam.example.sbtask2.service.TypeService;
@@ -43,26 +44,28 @@ public class GuideStructureController {
 
     /**
      * Метод для создания нового типа данных
+     *
      * @param json {"name":"String"}
      * @throws JsonProcessingException
      */
     //todo сделать обработку ситуации, если тип уже существует
     @PutMapping("/createType")
-    public  ResponseEntity<String>   createType(@RequestBody String json) throws JsonProcessingException {
-        Type type= converter.convertJsonToEntity(json,Type.class);
-        result=converter.convertEntityToJson(typeService.addType(type));
+    public ResponseEntity<String> createType(@RequestBody String json) throws JsonProcessingException {
+        Type type = converter.convertJsonToEntity(json, Type.class);
+        result = converter.convertEntityToJson(typeService.addType(type));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
      * Метод для создания справочника
+     *
      * @param json {"name":"person"}
      */
     //todo сделать обработку ситуации, если справочник уже существует
     @PutMapping("/createGuide")
-    public ResponseEntity<String>  createGuide(@RequestBody String json) throws JsonProcessingException {
-        Guide guide= converter.convertJsonToEntity(json,Guide.class);
-        result=converter.convertEntityToJson(guideService.addGuide(guide));
+    public ResponseEntity<String> createGuide(@RequestBody String json) throws JsonProcessingException {
+        Guide guide = converter.convertJsonToEntity(json, Guide.class);
+        result = converter.convertEntityToJson(guideService.addGuide(guide));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -73,9 +76,9 @@ public class GuideStructureController {
      */
     @PutMapping("/createField")
     //todo сделать обработку ситуации, если поле уже существует
-    public ResponseEntity<String>  addField(@RequestBody String json) throws JsonProcessingException {
-        Field field = converter.convertJsonToEntity(json,Field.class);
-        result=converter.convertEntityToJson(fieldService.saveField(field));
+    public ResponseEntity<String> addField(@RequestBody String json) throws JsonProcessingException {
+        Field field = converter.convertJsonToEntity(json, Field.class);
+        result = converter.convertEntityToJson(fieldService.saveField(field));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -86,14 +89,25 @@ public class GuideStructureController {
      * @return Возвращает статус выполнения
      */
     @PostMapping("/renameField")
-    public ResponseEntity<String> renameField( @RequestBody String json) throws JsonProcessingException {
+    public ResponseEntity<String> renameField(@RequestBody String json) throws JsonProcessingException, ServiceException {
+//        try {
+//            fieldsGuide = converter.convertJsonToMap(json);
+//            Field field = fieldService.renameFieldByName(fieldsGuide.get("nameGuide"), fieldsGuide.get("oldName"), fieldsGuide.get("newName"));
+//            result = converter.convertEntityToJson(fieldService.saveField(field));
+//            return new ResponseEntity<>(result, HttpStatus.OK);
+//        }
+//        catch (ServiceException e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+
+
         fieldsGuide = converter.convertJsonToMap(json);
         Field field=fieldService.renameFieldByName(fieldsGuide.get("nameGuide"),fieldsGuide.get("oldName"),fieldsGuide.get("newName"));
         if (field!=null){
             result=converter.convertEntityToJson(fieldService.saveField(field));
             return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("Field not found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Field not found. From controller", HttpStatus.BAD_REQUEST);
         }
     }
 

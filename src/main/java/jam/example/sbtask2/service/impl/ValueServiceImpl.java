@@ -1,6 +1,7 @@
 package jam.example.sbtask2.service.impl;
 
 import jam.example.sbtask2.entity.Vallue;
+import jam.example.sbtask2.exception.ServiceException;
 import jam.example.sbtask2.repository.VallueRepository;
 import jam.example.sbtask2.service.FieldService;
 import jam.example.sbtask2.service.VallueService;
@@ -35,8 +36,11 @@ public class ValueServiceImpl implements VallueService {
         Long nextRow = vallueRepository.findMaxRowByGuide(nameGuide).orElse(0L) + 1;
         List<Vallue> vallueList = new ArrayList<>();
         vallueMap.forEach((fld, val) -> {
-            fieldService.findFieldByName(nameGuide, fld);
-            vallueList.add(new Vallue(fieldService.findFieldByName(nameGuide, fld), val, nextRow));
+            try {
+                vallueList.add(new Vallue(fieldService.findFieldByName(nameGuide, fld), val, nextRow));
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
 
         });
         return vallueRepository.saveAll(vallueList);
