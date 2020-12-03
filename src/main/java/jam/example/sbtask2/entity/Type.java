@@ -29,7 +29,7 @@ public class Type {
     @OneToMany(mappedBy = "type",cascade = CascadeType.REMOVE)
     private List<Field> fieldList;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     public Type(String name) {

@@ -30,7 +30,7 @@ public class Guide {
 
     private List<Field> fieldList;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     public Guide(String name) {this.name = name;}

@@ -3,6 +3,7 @@ package jam.example.sbtask2.entity;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,16 +35,19 @@ public class Field {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "guide_id")
+    @NonNull
     private Guide guide;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id")
+    @NonNull
     private Type type;
 
     @Column
+    @NonNull
     private String name;
 
-    public Field(Guide guide, String name, Type type) {
+    public Field(@NonNull Guide guide, @NonNull String name, @NonNull Type type) {
         this.name = name;
         this.guide = guide;
         this.type = type;
