@@ -3,6 +3,7 @@ package jam.example.sbtask2.entity;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Type {
     private List<Field> fieldList;
 
     @Column(unique = true)
+    @NonNull
     private String name;
 
     public Type(String name) {

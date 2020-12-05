@@ -39,7 +39,7 @@ class LifeCycleServicesTest extends ConstantSQLTest {
         Map<String, String> vallueList = new HashMap<>();
 
         Guide guide = guideService.addGuide(new Guide(nameGuide));
-        Type type = typeService.addType(new Type(typeData));
+        Type type = typeService.addType(new Type(typeDataStr));
         Field field = new Field(guide, nameField, type);
         Field field2 = new Field(guide, nameField2, type);
         Field field3 = new Field(guide, nameField3, type);

@@ -35,8 +35,13 @@ public class ConstantSQLTest {
     @Value("${guide.name_field3}")
     public String nameField3;
 
-    @Value("${guide.type}")
-    public String typeData;
+    @Value("${guide.type.Str}")
+    public String typeDataStr;
 
+    @Value("${guide.type.Int}")
+    public String typeDataInt;
+
+    @Value("${guide.type.Bln}")
+    public String typeDataBln;
 
 }

@@ -25,10 +25,15 @@ public class TypeServiceImpl implements TypeService {
      * @return возвращает добавленный Type
      */
     public Type addType(Type type) {
-        return typeRepository.save(type);
+        Type typeOld=typeRepository.findByName(type.getName()).orElse(null);
+        if (typeOld==null){
+            return typeRepository.save(type);
+        }
+        return typeOld;
     }
 
     public Type findType(String name) {
-        return typeRepository.findByName(name);
+
+        return typeRepository.findByName(name).orElse(null);
     }
 }
