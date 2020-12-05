@@ -34,7 +34,11 @@ public class FieldServiceImpl implements FieldService {
      * @return Возвращает сохранённое значение
      */
     public Field saveField(Field field) {
-        return fieldRepository.save(field);
+        Field oldField=fieldRepository.findFieldByName(field.getGuide().getId(),field.getName());
+        if (oldField==null){
+            return fieldRepository.save(field);
+        }
+        return oldField;
     }
 
     /**

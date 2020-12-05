@@ -32,7 +32,7 @@ public class GuideServiceImpl implements GuideService {
         if (savedGuide == null) {
             return guideRepository.save(guide);
         }
-        return guide;
+        return savedGuide;
     }
 
     /**

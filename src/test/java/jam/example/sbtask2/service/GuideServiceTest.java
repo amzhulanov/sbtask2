@@ -1,5 +1,7 @@
 package jam.example.sbtask2.service;
 
+import jam.example.sbtask2.config.ConstantSQLTest;
+import jam.example.sbtask2.entity.Guide;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @Slf4j
-class GuideServiceTest {
+class GuideServiceTest extends ConstantSQLTest {
 
-    private GuideService guideService;
+    private final GuideService guideService;
 
     @Autowired
     GuideServiceTest(GuideService guideService) {
@@ -23,6 +25,10 @@ class GuideServiceTest {
 
     @Test
     void addGuide() {
+        assertThat(guideService.findGuideByName(nameGuide)==null);
+        Long id=guideService.addGuide(new Guide(nameGuide)).getId();
+        assertThat(id).isGreaterThan(0L);
+        assertThat(guideService.addGuide(new Guide(nameGuide)).getId()).isEqualTo(id);
     }
 
     @Test

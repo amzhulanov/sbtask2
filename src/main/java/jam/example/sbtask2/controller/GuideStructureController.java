@@ -48,7 +48,6 @@ public class GuideStructureController {
      * @param json {"name":"String"}
      * @throws JsonProcessingException
      */
-    //todo сделать обработку ситуации, если тип уже существует
     @PutMapping("/createType")
     public ResponseEntity<String> createType(@RequestBody String json) throws JsonProcessingException {
         Type type = converter.convertJsonToEntity(json, Type.class);
@@ -61,7 +60,6 @@ public class GuideStructureController {
      *
      * @param json {"name":"person"}
      */
-    //todo сделать обработку ситуации, если справочник уже существует
     @PutMapping("/createGuide")
     public ResponseEntity<String> createGuide(@RequestBody String json) throws JsonProcessingException {
         Guide guide = converter.convertJsonToEntity(json, Guide.class);
@@ -75,7 +73,6 @@ public class GuideStructureController {
      * @param json {"guide":{"id":1,"fieldList":null,"name":"person"},"type":{"id":1,"fieldList":null,"name":"String"},"name":"firstname"}
      */
     @PutMapping("/createField")
-    //todo сделать обработку ситуации, если поле уже существует
     public ResponseEntity<String> addField(@RequestBody String json) throws JsonProcessingException {
         Field field = converter.convertJsonToEntity(json, Field.class);
         result = converter.convertEntityToJson(fieldService.saveField(field));
